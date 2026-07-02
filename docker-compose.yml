@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  pihole:
+    container_name: network-guardian-pihole
+    image: pihole/pihole:latest
+    ports:
+      # DNS
+      - "53:53/tcp"
+      - "53:53/udp"
+      # Admin web UI
+      - "8080:80/tcp"
+    environment:
+      TZ: "Asia/Kolkata"
+      WEBPASSWORD: "changeme123"   # change this before first run
+      DNSMASQ_LISTENING: "all"
+    volumes:
+      - "./etc-pihole:/etc/pihole"
+      - "./etc-dnsmasq.d:/etc/dnsmasq.d"
+    restart: unless-stopped
